@@ -4150,11 +4150,6 @@ function updateBallState() {
         img.style.height = '100%';
         img.style.objectFit = 'contain';
         gifContainer.appendChild(img);
-
-                // Play error sound
-                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
-                errorSound1.volume = 0.5;
-                errorSound1.play().catch(e => console.log('Audio play failed:', e));
         
         // After GIF plays for about 2 seconds, switch to static PNG
         setTimeout(() => {
@@ -4199,11 +4194,6 @@ function updateBallState() {
         img.style.height = '100%';
         img.style.objectFit = 'contain';
         gifContainer.appendChild(img);
-
-                // Play error sound
-                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
-                errorSound1.volume = 0.5;
-                errorSound1.play().catch(e => console.log('Audio play failed:', e));
         
         // After GIF plays for about 2 seconds, switch to static PNG
         setTimeout(() => {
@@ -4220,8 +4210,8 @@ function updateBallState() {
         
         // Play error sound for multiple balls
         const errorSound = new Audio('Assets/game sounds/sound-8.mp3');
-        errorSound1.volume = 0.5;
-        errorSound1.play().catch(e => console.log('Audio play failed:', e));
+        errorSound.volume = 0.5;
+        errorSound.play().catch(e => console.log('Audio play failed:', e));
         
         // Set up continuous redraw to ensure message stays visible
         setupShotStateDisplay();
