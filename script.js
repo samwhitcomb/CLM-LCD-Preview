@@ -1197,7 +1197,7 @@ const flows = {
         
         {
             title: "Factory Settings",
-            explanation: "What will be seen when the unit is first powered on",
+            explanation: "What will be seen when the unit is first powered on. Currently not added but it will be welcome message and push to connect device and download software.",
             draw: (ctx, frame) => {
                 ctx.fillStyle = '#000';
                 ctx.fillRect(0, 0, LCD_WIDTH, LCD_HEIGHT);
@@ -1363,10 +1363,7 @@ const flows = {
                 img.style.objectFit = 'contain';
                 gifContainer.appendChild(img);
 
-                // Play error sound
-                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
-                errorSound1.volume = 0.5;
-                errorSound1.play().catch(e => console.log('Audio play failed:', e));
+    
 
                 // Start the sequence with white loading
                 img.src = 'Assets/Main Gif/Loading.gif';
@@ -3793,16 +3790,31 @@ function drawPlaceBallMessage(ctx) {
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, LCD_WIDTH, LCD_HEIGHT);
     
-    // Note: The Place.gif will be handled by DOM overlay in the calling function
-    // This function now just clears the canvas background
+    // Draw typed message for ShotState, GIF overlay for ShotState2
+    if (currentFlow === 'ShotState') {
+        ctx.fillStyle = '#fff';
+        ctx.font = `400 ${scaleSize(24)}px 'Barlow', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('PLACE BALL', CENTER_X, CENTER_Y - scaleSize(0));
+    }
+    // Note: For ShotState2, the Place.gif will be handled by DOM overlay in the calling function
 }
 
 function drawMultipleBallsMessage(ctx) {
     ctx.fillStyle = '#000';
     ctx.fillRect(0, 0, LCD_WIDTH, LCD_HEIGHT);
     
-    // Note: The multiple.gif will be handled by DOM overlay in the calling function
-    // This function now just clears the canvas background
+    // Draw typed message for ShotState, GIF overlay for ShotState2
+    if (currentFlow === 'ShotState') {
+        ctx.fillStyle = '#fff';
+        ctx.font = `400 ${scaleSize(18)}px 'Barlow', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('MULTIPLE BALLS', CENTER_X, CENTER_Y - scaleSize(10));
+        ctx.fillText('DETECTED', CENTER_X, CENTER_Y + scaleSize(12));
+    }
+    // Note: For ShotState2, the multiple.gif will be handled by DOM overlay in the calling function
 }
 
 function showImmediateReady() {
@@ -3818,65 +3830,82 @@ function showImmediateReady() {
         ledLight.classList.add('green');
     }
     
-    // Remove any existing gif containers
-    const existingContainers = document.querySelectorAll('[data-gif-container="true"]');
-    existingContainers.forEach(container => {
-        if (container.parentNode) {
-            container.parentNode.removeChild(container);
-        }
-    });
-    
-    // Create container for immediate ready sequence
-    const gifContainer = document.createElement('div');
-    gifContainer.style.position = 'absolute';
-    gifContainer.style.top = 0 + 'px';
-    gifContainer.style.left = 0 + 'px';
-    gifContainer.style.width = canvas.width + 'px';
-    gifContainer.style.height = canvas.height + 'px';
-    gifContainer.style.zIndex = '0';
-    gifContainer.dataset.gifContainer = 'true';
-    canvas.parentNode.appendChild(gifContainer);
-
-    // Create and load the image
-    const img = document.createElement('img');
-    img.style.width = '100%';
-    img.style.height = '100%';
-    img.style.objectFit = 'contain';
-    gifContainer.appendChild(img);
-
-
-
-    // Start directly with Ready.gif (no loading animation)
-    img.src = 'Assets/Main Gif/Ready.gif';
-    
-    // Play bubble sound effect immediately
-    const bubbleSound = new Audio('Assets/game sounds/bit beep.mp3');
-    bubbleSound.volume = 0.5;
-    bubbleSound.play().catch(e => console.log('Audio play failed:', e));
-    
-    let startTime = Date.now();
-    
-    const animate = () => {
-        if ((currentFlow !== 'ShotState' && currentFlow !== 'ShotState2') || ballCount !== 1 || isShotInProgress) {
-            // Cleanup when conditions change
-            if (gifContainer.parentNode) {
-                gifContainer.parentNode.removeChild(gifContainer);
+    // Handle ShotState vs ShotState2 differently
+    if (currentFlow === 'ShotState') {
+        // For ShotState, draw typed "READY" message
+        ctx.fillStyle = '#fff';
+        ctx.font = `400 ${scaleSize(26)}px 'Barlow', sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText('READY', CENTER_X, CENTER_Y);
+        
+        // Play bit beep sound effect
+        const bubbleSound = new Audio('Assets/game sounds/bit beep.mp3');
+        bubbleSound.volume = 0.5;
+        bubbleSound.play().catch(e => console.log('Audio play failed:', e));
+        
+        // Set up continuous redraw for typed message
+        setupShotStateDisplay();
+    } else if (currentFlow === 'ShotState2') {
+        // For ShotState2, use GIF animation
+        // Remove any existing gif containers
+        const existingContainers = document.querySelectorAll('[data-gif-container="true"]');
+        existingContainers.forEach(container => {
+            if (container.parentNode) {
+                container.parentNode.removeChild(container);
             }
-            return;
-        }
+        });
         
-        const elapsedTime = Date.now() - startTime;
+        // Create container for immediate ready sequence
+        const gifContainer = document.createElement('div');
+        gifContainer.style.position = 'absolute';
+        gifContainer.style.top = 0 + 'px';
+        gifContainer.style.left = 0 + 'px';
+        gifContainer.style.width = canvas.width + 'px';
+        gifContainer.style.height = canvas.height + 'px';
+        gifContainer.style.zIndex = '0';
+        gifContainer.dataset.gifContainer = 'true';
+        canvas.parentNode.appendChild(gifContainer);
+
+        // Create and load the image
+        const img = document.createElement('img');
+        img.style.width = '100%';
+        img.style.height = '100%';
+        img.style.objectFit = 'contain';
+        gifContainer.appendChild(img);
+
+        // Start directly with Ready.gif (no loading animation)
+        img.src = 'Assets/Main Gif/Ready.gif';
         
-        // After Ready.gif plays for about 2 seconds, switch to Ready0537.png
-        if (elapsedTime >= 700) {
-            img.src = 'Assets/Main Gif/Ready0537.png';
-            // Continue showing Ready0537.png persistently
-        }
+        // Play bubble sound effect immediately
+        const bubbleSound = new Audio('Assets/game sounds/bit beep.mp3');
+        bubbleSound.volume = 0.5;
+        bubbleSound.play().catch(e => console.log('Audio play failed:', e));
         
-        requestAnimationFrame(animate);
-    };
-    
-    animate();
+        let startTime = Date.now();
+        
+        const animate = () => {
+            if (currentFlow !== 'ShotState2' || ballCount !== 1 || isShotInProgress) {
+                // Cleanup when conditions change
+                if (gifContainer.parentNode) {
+                    gifContainer.parentNode.removeChild(gifContainer);
+                }
+                return;
+            }
+            
+            const elapsedTime = Date.now() - startTime;
+            
+            // After Ready.gif plays for about 2 seconds, switch to Ready0537.png
+            if (elapsedTime >= 700) {
+                img.src = 'Assets/Main Gif/Ready0537.png';
+                // Continue showing Ready0537.png persistently
+            }
+            
+            requestAnimationFrame(animate);
+        };
+        
+        animate();
+    }
 }
 
 function updateBallState() {
@@ -3907,37 +3936,39 @@ function updateBallState() {
     const ledLight = document.getElementById('ledLight');
     
     if (ballCount === 0) {
-        // No balls - show place ball GIF and red LED
-        drawPlaceBallMessage(ctx); // This now just clears the canvas
+        // No balls - show place ball message/GIF and red LED
+        drawPlaceBallMessage(ctx);
         
-        // Create container for Place.gif
-        const gifContainer = document.createElement('div');
-        gifContainer.style.position = 'absolute';
-        gifContainer.style.top = 0 + 'px';
-        gifContainer.style.left = 0 + 'px';
-        gifContainer.style.width = canvas.width + 'px';
-        gifContainer.style.height = canvas.height + 'px';
-        gifContainer.style.zIndex = '0';
-        gifContainer.style.pointerEvents = 'none';
-        gifContainer.dataset.gifContainer = 'true';
-        canvas.parentNode.appendChild(gifContainer);
+        // Only create GIF overlay for ShotState2
+        if (currentFlow === 'ShotState2') {
+            // Create container for Place.gif
+            const gifContainer = document.createElement('div');
+            gifContainer.style.position = 'absolute';
+            gifContainer.style.top = 0 + 'px';
+            gifContainer.style.left = 0 + 'px';
+            gifContainer.style.width = canvas.width + 'px';
+            gifContainer.style.height = canvas.height + 'px';
+            gifContainer.style.zIndex = '0';
+            gifContainer.style.pointerEvents = 'none';
+            gifContainer.dataset.gifContainer = 'true';
+            canvas.parentNode.appendChild(gifContainer);
 
-        // Create and load the Place.gif
-        const img = document.createElement('img');
-        img.src = 'Assets/Main Gif/Place.gif';
-        img.style.position = 'absolute';
-        img.style.width = '100%';
-        img.style.height = '100%';
-        img.style.objectFit = 'contain';
-        gifContainer.appendChild(img);
+            // Create and load the Place.gif
+            const img = document.createElement('img');
+            img.src = 'Assets/Main Gif/Place.gif';
+            img.style.position = 'absolute';
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'contain';
+            gifContainer.appendChild(img);
 
-        
-        // After GIF plays for about 2 seconds, switch to static PNG
-        setTimeout(() => {
-            if (img.parentNode && currentFlow === 'ShotState2') {
-                img.src = 'Assets/Main Gif/Place0537.png';
-            }
-        }, 700); // 2 seconds
+            // After GIF plays for about 2 seconds, switch to static PNG
+            setTimeout(() => {
+                if (img.parentNode && currentFlow === 'ShotState2') {
+                    img.src = 'Assets/Main Gif/Place0537.png';
+                }
+            }, 700); // 2 seconds
+        }
         
         if (ledLight) {
             ledLight.className = 'led-light';
@@ -3952,31 +3983,41 @@ function updateBallState() {
             showImmediateReady();
         }
     } else {
-        // Multiple balls - show multiple balls GIF and blinking red LED
-        drawMultipleBallsMessage(ctx); // This now just clears the canvas
+        // Multiple balls - show multiple balls message/GIF and blinking red LED
+        drawMultipleBallsMessage(ctx);
         
-        // Create container for multiple.gif
-        const gifContainer = document.createElement('div');
-        gifContainer.style.position = 'absolute';
-        gifContainer.style.top = 0 + 'px';
-        gifContainer.style.left = 0 + 'px';
-        gifContainer.style.width = canvas.width + 'px';
-        gifContainer.style.height = canvas.height + 'px';
-        gifContainer.style.zIndex = '0';
-        gifContainer.style.pointerEvents = 'none';
-        gifContainer.dataset.gifContainer = 'true';
-        canvas.parentNode.appendChild(gifContainer);
+        // Only create GIF overlay for ShotState2
+        if (currentFlow === 'ShotState2') {
+            // Create container for multiple.gif
+            const gifContainer = document.createElement('div');
+            gifContainer.style.position = 'absolute';
+            gifContainer.style.top = 0 + 'px';
+            gifContainer.style.left = 0 + 'px';
+            gifContainer.style.width = canvas.width + 'px';
+            gifContainer.style.height = canvas.height + 'px';
+            gifContainer.style.zIndex = '0';
+            gifContainer.style.pointerEvents = 'none';
+            gifContainer.dataset.gifContainer = 'true';
+            canvas.parentNode.appendChild(gifContainer);
 
-        // Create and load the multiple.gif
-        const img = document.createElement('img');
-        img.src = 'Assets/Main Gif/multiple.gif';
-        img.style.position = 'absolute';
-        img.style.width = '100%';
-        img.style.height = '100%';
-        img.style.objectFit = 'contain';
-        gifContainer.appendChild(img);
+            // Create and load the multiple.gif
+            const img = document.createElement('img');
+            img.src = 'Assets/Main Gif/multiple.gif';
+            img.style.position = 'absolute';
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'contain';
+            gifContainer.appendChild(img);
 
-                // Play error sound
+            // After GIF plays for about 2 seconds, switch to static PNG
+            setTimeout(() => {
+                if (img.parentNode && currentFlow === 'ShotState2') {
+                    img.src = 'Assets/Main Gif/multiple0537.png';
+                }
+            }, 700); // 2 seconds
+        }
+
+        // Play error sound
                 const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
                 errorSound1.volume = 0.5;
                 errorSound1.play().catch(e => console.log('Audio play failed:', e));
@@ -4015,10 +4056,22 @@ function setupShotStateDisplay() {
         
         if (ballCount === 0) {
             drawPlaceBallMessage(ctx);
-            // The Place.gif is handled by DOM overlay, no need to redraw it
+            // For ShotState2, the Place.gif is handled by DOM overlay
+        } else if (ballCount === 1) {
+            // For ShotState, redraw the "READY" message
+            if (currentFlow === 'ShotState') {
+                ctx.fillStyle = '#000';
+                ctx.fillRect(0, 0, LCD_WIDTH, LCD_HEIGHT);
+                ctx.fillStyle = '#fff';
+                ctx.font = `400 ${scaleSize(24)}px 'Barlow', sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('READY', CENTER_X, CENTER_Y);
+            }
+            // For ShotState2, the Ready.gif is handled by DOM overlay
         } else if (ballCount > 1) {
             drawMultipleBallsMessage(ctx);
-            // The multiple.gif is handled by DOM overlay, no need to redraw it
+            // For ShotState2, the multiple.gif is handled by DOM overlay
         }
         
         frame++;
