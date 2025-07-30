@@ -1035,8 +1035,8 @@ const flows = {
                             img.src = 'Assets/Main Gif/Error.png';
                         }
                         
-                                currentState.draw(ctx, frame++);
-                                requestAnimationFrame(animate);
+                        currentState.draw(ctx, frame++);
+                        requestAnimationFrame(animate);
                     } else {
                         // Cleanup when switching away
                         if (gifContainer.parentNode) {
@@ -1204,16 +1204,16 @@ const flows = {
                 
                 if (true) {
                     // Draw text at the top
-                    ctx.fillStyle = '#fff';
+                ctx.fillStyle = '#fff';
                     ctx.font = scaleSize(16) + 'px Barlow Light';
                     ctx.fontWeight = '300';
                     ctx.textAlign = 'center';
                     ctx.fillText('Firmware 1.43', CENTER_X, scaleY(38));
 
-                    ctx.fillStyle = '#fff';
+                ctx.fillStyle = '#fff';
                     ctx.font = scaleSize(20) + 'px Barlow Light';
                     ctx.fontWeight = '400';
-                    ctx.textAlign = 'center';
+                ctx.textAlign = 'center';
                     ctx.fillText('Ready', CENTER_X, scaleY(56));
                 }
 
@@ -1397,8 +1397,8 @@ const flows = {
                             return; // Stop the animation
                         }
                         
-                        currentState.draw(ctx, frame++);
-                        requestAnimationFrame(animate);
+                                currentState.draw(ctx, frame++);
+                                requestAnimationFrame(animate);
                     } else {
                         // Cleanup when switching away
                         if (gifContainer.parentNode) {
@@ -1418,114 +1418,7 @@ const flows = {
                 };
             }
         },
-        {
-            title: "Blue Loading Animation",
-            explanation: "A blue loading animation test which indicates processing or loading state. Unlikely to be used in production.",
-            draw: (ctx, frame) => {
-                // Clear the canvas
-                ctx.fillStyle = '#000';
-                ctx.fillRect(0, 0, LCD_WIDTH, LCD_HEIGHT);
-
-                // Draw battery and WiFi
-                drawBattery(ctx, 85);
-                drawWifiStatus(ctx, 'connected', frame, false);
-            },
-            led: { state: 'breathing', color: 'blue' },
-            onEnter: () => {
-                // Create a container for the GIF
-                const gifContainer = document.createElement('div');
-                gifContainer.style.position = 'absolute';
-                gifContainer.style.top = 0 + 'px';
-                gifContainer.style.left = 0 + 'px';
-                gifContainer.style.width = canvas.width + 'px';
-                gifContainer.style.height = canvas.height + 'px';
-                gifContainer.style.zIndex = '0';  // Set to background
-                canvas.parentNode.appendChild(gifContainer);
-
-                // Create and load the image
-                const img = document.createElement('img');
-                img.src = 'Assets/Blue_Loading.gif';
-                img.style.width = '100%';
-                img.style.height = '100%';
-                img.style.objectFit = 'contain';
-                gifContainer.appendChild(img);
-
-                // Play error sound
-                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
-                errorSound1.volume = 0.5;
-                errorSound1.play().catch(e => console.log('Audio play failed:', e));
-
-                let frame = 0;
-                const animate = () => {
-                    const currentStates = flows[currentFlow];
-                    const currentState = currentStates[currentStateIndex];
-                    if (currentState.title === "Blue Loading Animation") {
-                        currentState.draw(ctx, frame++);
-                        requestAnimationFrame(animate);
-                    } else {
-                        // Cleanup when switching away
-                        if (gifContainer.parentNode) {
-                            gifContainer.parentNode.removeChild(gifContainer);
-                        }
-                    }
-                };
-                animate();
-            }
-        },
-        {
-            title: "White Loading Animation",
-            explanation: "A white loading animation that indicates processing or loading state. Clearer and less distracting. Bouce is used in the animation to give a more dynamic feel.",
-            draw: (ctx, frame) => {
-                // Clear the canvas
-                ctx.fillStyle = '#000';
-                ctx.fillRect(0, 0, LCD_WIDTH, LCD_HEIGHT);
-
-                // Draw battery and WiFi
-                drawBattery(ctx, 85);
-                drawWifiStatus(ctx, 'connected', frame, false);
-            },
-            led: { state: 'breathing', color: 'white' },
-            onEnter: () => {
-                // Create a container for the GIF
-                const gifContainer = document.createElement('div');
-                gifContainer.style.position = 'absolute';
-                gifContainer.style.top = 0 + 'px';
-                gifContainer.style.left = 0 + 'px';
-                gifContainer.style.width = canvas.width + 'px';
-                gifContainer.style.height = canvas.height + 'px';
-                gifContainer.style.zIndex = '0';  // Set to background
-                canvas.parentNode.appendChild(gifContainer);
-
-                // Create and load the image
-                const img = document.createElement('img');
-                img.src = 'Assets/Main Gif/Loading.gif';
-                img.style.width = '100%';
-                img.style.height = '100%';
-                img.style.objectFit = 'contain';
-                gifContainer.appendChild(img);
-
-                // Play error sound
-                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
-                errorSound1.volume = 0.5;
-                errorSound1.play().catch(e => console.log('Audio play failed:', e));
-
-                let frame = 0;
-                const animate = () => {
-                    const currentStates = flows[currentFlow];
-                    const currentState = currentStates[currentStateIndex];
-                    if (currentState.title === "White Loading Animation") {
-                        currentState.draw(ctx, frame++);
-                        requestAnimationFrame(animate);
-                    } else {
-                        // Cleanup when switching away
-                        if (gifContainer.parentNode) {
-                            gifContainer.parentNode.removeChild(gifContainer);
-                        }
-                    }
-                };
-                animate();
-            }
-        }
+    
     ],
     ShotState2: [
         {
@@ -1566,10 +1459,7 @@ const flows = {
                 img.style.objectFit = 'contain';
                 gifContainer.appendChild(img);
 
-                // Play error sound
-                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
-                errorSound1.volume = 0.5;
-                errorSound1.play().catch(e => console.log('Audio play failed:', e));
+
 
                 // Start the sequence with white loading
                 img.src = 'Assets/Main Gif/Loading.gif';
@@ -1621,114 +1511,7 @@ const flows = {
                 };
             }
         },
-        {
-            title: "Blue Loading Animation",
-            explanation: "A blue loading animation test which indicates processing or loading state. Unlikely to be used in production.",
-            draw: (ctx, frame) => {
-                // Clear the canvas
-                ctx.fillStyle = '#000';
-                ctx.fillRect(0, 0, LCD_WIDTH, LCD_HEIGHT);
-
-                // Draw battery and WiFi
-                drawBattery(ctx, 85);
-                drawWifiStatus(ctx, 'connected', frame, false);
-            },
-            led: { state: 'breathing', color: 'blue' },
-            onEnter: () => {
-                // Create a container for the GIF
-                const gifContainer = document.createElement('div');
-                gifContainer.style.position = 'absolute';
-                gifContainer.style.top = 0 + 'px';
-                gifContainer.style.left = 0 + 'px';
-                gifContainer.style.width = canvas.width + 'px';
-                gifContainer.style.height = canvas.height + 'px';
-                gifContainer.style.zIndex = '0';  // Set to background
-                canvas.parentNode.appendChild(gifContainer);
-
-                // Create and load the image
-                const img = document.createElement('img');
-                img.src = 'Assets/Blue_Loading.gif';
-                img.style.width = '100%';
-                img.style.height = '100%';
-                img.style.objectFit = 'contain';
-                gifContainer.appendChild(img);
-
-                // Play error sound
-                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
-                errorSound1.volume = 0.5;
-                errorSound1.play().catch(e => console.log('Audio play failed:', e));
-
-                let frame = 0;
-                const animate = () => {
-                    const currentStates = flows[currentFlow];
-                    const currentState = currentStates[currentStateIndex];
-                    if (currentState.title === "Blue Loading Animation") {
-                        currentState.draw(ctx, frame++);
-                        requestAnimationFrame(animate);
-                    } else {
-                        // Cleanup when switching away
-                        if (gifContainer.parentNode) {
-                            gifContainer.parentNode.removeChild(gifContainer);
-                        }
-                    }
-                };
-                animate();
-            }
-        },
-        {
-            title: "White Loading Animation",
-            explanation: "A white loading animation that indicates processing or loading state. Clearer and less distracting. Bouce is used in the animation to give a more dynamic feel.",
-            draw: (ctx, frame) => {
-                // Clear the canvas
-                ctx.fillStyle = '#000';
-                ctx.fillRect(0, 0, LCD_WIDTH, LCD_HEIGHT);
-
-                // Draw battery and WiFi
-                drawBattery(ctx, 85);
-                drawWifiStatus(ctx, 'connected', frame, false);
-            },
-            led: { state: 'breathing', color: 'white' },
-            onEnter: () => {
-                // Create a container for the GIF
-                const gifContainer = document.createElement('div');
-                gifContainer.style.position = 'absolute';
-                gifContainer.style.top = 0 + 'px';
-                gifContainer.style.left = 0 + 'px';
-                gifContainer.style.width = canvas.width + 'px';
-                gifContainer.style.height = canvas.height + 'px';
-                gifContainer.style.zIndex = '0';  // Set to background
-                canvas.parentNode.appendChild(gifContainer);
-
-                // Create and load the image
-                const img = document.createElement('img');
-                img.src = 'Assets/Main Gif/Loading.gif';
-                img.style.width = '100%';
-                img.style.height = '100%';
-                img.style.objectFit = 'contain';
-                gifContainer.appendChild(img);
-
-                // Play error sound
-                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
-                errorSound1.volume = 0.5;
-                errorSound1.play().catch(e => console.log('Audio play failed:', e));
-
-                let frame = 0;
-                const animate = () => {
-                    const currentStates = flows[currentFlow];
-                    const currentState = currentStates[currentStateIndex];
-                    if (currentState.title === "White Loading Animation") {
-                        currentState.draw(ctx, frame++);
-                        requestAnimationFrame(animate);
-                    } else {
-                        // Cleanup when switching away
-                        if (gifContainer.parentNode) {
-                            gifContainer.parentNode.removeChild(gifContainer);
-                        }
-                    }
-                };
-                animate();
-            }
-        }
+       
     ],
     "Connection Animations": [
         {
@@ -4061,10 +3844,7 @@ function showImmediateReady() {
     img.style.objectFit = 'contain';
     gifContainer.appendChild(img);
 
-                // Play error sound
-                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
-                errorSound1.volume = 0.5;
-                errorSound1.play().catch(e => console.log('Audio play failed:', e));
+
 
     // Start directly with Ready.gif (no loading animation)
     img.src = 'Assets/Main Gif/Ready.gif';
@@ -4150,6 +3930,7 @@ function updateBallState() {
         img.style.height = '100%';
         img.style.objectFit = 'contain';
         gifContainer.appendChild(img);
+
         
         // After GIF plays for about 2 seconds, switch to static PNG
         setTimeout(() => {
@@ -4194,6 +3975,11 @@ function updateBallState() {
         img.style.height = '100%';
         img.style.objectFit = 'contain';
         gifContainer.appendChild(img);
+
+                // Play error sound
+                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
+                errorSound1.volume = 0.5;
+                errorSound1.play().catch(e => console.log('Audio play failed:', e));
         
         // After GIF plays for about 2 seconds, switch to static PNG
         setTimeout(() => {
@@ -4210,8 +3996,8 @@ function updateBallState() {
         
         // Play error sound for multiple balls
         const errorSound = new Audio('Assets/game sounds/sound-8.mp3');
-        errorSound.volume = 0.5;
-        errorSound.play().catch(e => console.log('Audio play failed:', e));
+        errorSound1.volume = 0.5;
+        errorSound1.play().catch(e => console.log('Audio play failed:', e));
         
         // Set up continuous redraw to ensure message stays visible
         setupShotStateDisplay();
