@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LCD Device Simulator</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        @font-face {
+            font-family: 'Acumin Pro ExtraCond Bold Italic';
+            src: url('fonts/AcuminPro/Acumin-Pro-ExtraCond-Bold-Italic.ttf') format('truetype');
+            font-weight: bold;
+            font-style: italic;
+        }
+        @font-face {
+            font-family: 'Barlow Light';
+            src: url('fonts/Barlow_300Light.ttf') format('truetype');
+            font-weight: 300;
+            font-style: normal;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="device-container">
+            <div class="device-image">
+                <img src="Device front.png" alt="Device" class="device-bg">
+                <div class="lcd-display">
+                    <canvas id="lcdCanvas" width="320" height="240"></canvas>
+                    <div class="lcd-overlay"></div>
+                </div>
+                <div class="led-light" id="ledLight"></div>
+
+            </div>
+            <div class="device-controls" id="deviceControls">
+                <!-- Dynamic buttons will be inserted here -->
+            </div>
+            <div class="ball-counter" id="ballCounter" style="display: none;">
+                <span class="ball-counter-label">Balls Placed:</span>
+                <span id="ballCountDisplay" class="ball-counter-value">0</span>
+            </div>
+        </div>
+        <div class="side-panel">
+            <div class="panel-content">
+                <h2>LCD Simulator (57.6mm width)</h2>
+                <div class="flow-selector">
+                    <label for="flowSelect">Select Flow:</label>
+                    <select id="flowSelect" class="flow-select">
+                        
+                    </select>
+                </div>
+                <div class="explanation-box">
+                    <h3>Current Step</h3>
+                    <p id="stepExplanation">Welcome to the LCD simulator. Use the navigation buttons to explore different states.</p>
+                </div>
+                <div class="navigation-controls">
+                    <button id="prevStep" class="nav-button">Previous</button>
+                    <button id="nextStep" class="nav-button">Next</button>
+                </div>
+                <div class="step-indicator">
+                    <span id="currentStep">1</span> / <span id="totalSteps">1</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 

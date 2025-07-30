@@ -1,0 +1,126 @@
+# LCD Preview Components Glossary
+
+## UI Elements
+
+### LCD Display
+- `lcdCanvas` - The main HTML canvas element where all display content is rendered
+- `ctx` - The 2D rendering context for the canvas
+
+### Navigation Controls
+- `prevButton` - Button to go to the previous state
+- `nextButton` - Button to go to the next state
+- `flowSelect` - Dropdown to select different display flows
+- `powerButton` - Button to simulate the device power button
+- `ledLight` - LED indicator that changes color/state based on device status
+
+### Other UI Elements
+- `explanationText` - Text description of the current state
+- `currentStepSpan` - Displays the current step number
+- `totalStepsSpan` - Displays the total number of steps in the current flow
+- `cable` - HTML element representing the charging cable
+
+## Core Display Mechanisms
+
+### Flow Management
+- `flows` - Object containing all display state flows (power, binding, firmware update, etc.)
+- `currentFlow` - Current active flow (string identifier)
+- `currentStateIndex` - Index of the current state within the active flow
+- `updateDisplay()` - Main function to update the display with the current state
+
+### Animation System
+- `onEnter()` - Method that initializes animations for a state
+- `currentAnimation` - Reference to the current running animation
+- `requestAnimationFrame()` - Browser API used for smooth animations
+
+## Common UI Components
+
+### Battery Display
+- `drawBattery(ctx, level)` - Function to draw battery at specified level (0-100)
+- `drawAnimatedBattery(ctx, frame, options)` - Enhanced battery with animation and customization options
+
+### Connection Indicators
+- `drawWifiStatus(ctx, status, frame, isFullHeight)` - Draws WiFi connection status (searching, connecting, connected)
+- `connectionState` - Global variable tracking current connection state ('searching', 'connecting', 'connected')
+
+### Power Controls
+- `drawPowerButtonAnimation(ctx, frame, isOff)` - Animates power button with bouncing arrow
+- `drawShutdownCountdown(ctx, remainingTime)` - Shows shutdown countdown timer
+- `isPowerButtonPressed` - Boolean tracking if power button is currently pressed
+- `isPoweredOff` - Boolean tracking if device is powered off
+- `isShuttingDown` - Boolean tracking if device is in shutdown process
+- `shutdownStartTime` - Timestamp when shutdown was initiated
+- `SHUTDOWN_HOLD_TIME` - Constant for how long power button must be held (2000ms)
+
+### Cable Charging
+- `isCableVisible` - Boolean tracking if charging cable is visible
+- `updateCableVisibility(visible)` - Function to show/hide the charging cable
+- `isChargerConnected` - Boolean tracking if charger is connected
+
+### Device Orientation
+- `rollDegrees` - Roll angle in degrees
+- `pitchDegrees` - Pitch angle in degrees
+- `rollExaggerationFactor` - Multiplier for roll angle display (3x)
+- `pitchExaggerationFactor` - Multiplier for pitch angle display (6x)
+- `drawAttitudeIndicator(ctx, roll, pitch)` - Draws attitude indicator with specified angles
+
+### Success Animation
+- `drawSuccessAnimation(ctx, frame)` - Draws success animation with green checkmark
+
+## Flow-Specific Components
+
+### Power Flow
+- `Off` - Device is powered off state
+- `Power On` - Device is powering on with logo fade in
+- `On` - Device is powered on and searching for connection
+- `Fully On` - Device is fully powered on and connected
+- `Shutdown` - Device is in shutdown sequence
+- `Shutdown Complete` - Device has been powered off
+
+### Binding Flow
+- `Linking Ready` - Device is ready to be linked to account
+- `Linking in Progress` - Device is being linked to account
+- `Linking Complete` - Device has been successfully linked
+
+### Firmware Update Flow
+- `Firmware Update, connect charger` - Initial state before update
+- `Update Ready` - Firmware update ready to start
+- `Updating` - Firmware update in progress
+- `Update Complete` - Firmware update completed successfully
+- `Restarting` - Device is restarting after update
+- `Charger Disconnected` - Error state when charger is removed during update
+- `Update Failed` - Error state when update fails
+- `updateProgress` - Global variable tracking firmware update progress (0-1)
+
+### Levelling Flow
+- `Attitude Indicator v2/v3/v4` - Different versions of the attitude indicator display
+- `isJoystickActive` - Boolean tracking if joystick control is active
+- `initJoystick()` - Function to initialize joystick controls
+
+### Error States Flow
+- Various error screens (System Error, Critical Error, Error E001, etc.)
+
+### Battery Status Flow
+- `Battery Normal` - Normal battery level
+- `Battery Low` - Low battery warning
+- `Battery Critical` - Critical battery warning
+
+### Cable Charging Flow
+- `Connect cable` - Initial cable connection animation
+- `Animated Battery 2` - Battery charging animation
+- `Battery Fully Charged` - Battery at 100% while charging
+- `Cable Disconnect` - Cable disconnection animation
+
+## Utility Functions
+
+- `toTitleCase(str)` - Converts strings to title case for display
+- `populateFlowSelect()` - Populates the flow selection dropdown
+- `startPowerOn()` - Initiates power on sequence
+- `startShutdownCountdown()` - Initiates shutdown sequence
+- `cancelShutdown()` - Cancels shutdown if button released early
+- `updateFirmwareProgress(progress)` - Updates firmware progress from external source
+
+## Assets
+
+- `microQRImg` - QR code image for binding flow
+- `microQRImgLoaded` - Boolean tracking if QR code image has loaded
+- `showSerialNumber` - Boolean to toggle between QR code and serial number in binding ready state 
