@@ -838,11 +838,16 @@ const flows = {
                 // No background - let animation show through
                 
                 // Draw error message at the very top
+                ctx.save();
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.textBaseline = 'alphabetic';
                 ctx.fillStyle = '#fff';
-                ctx.font = scaleSize(14) + 'px Barlow Light';
+                ctx.font = `300 ${scaleSize(14)}px 'Barlow', sans-serif`;
                 ctx.textAlign = 'left';
-                ctx.fillText('Firmware', scaleX(55), scaleY(35));
-                ctx.fillText('Update Failed', scaleX(55), scaleY(50));
+                ctx.fillText('Firmware', scaleX(55), CENTER_Y - scaleSize(5));
+                ctx.fillText('Update Failed', scaleX(55), CENTER_Y + scaleSize(12));
+                ctx.restore();
             },
             led: { state: 'breathing', color: 'red' },
             onEnter: () => {
@@ -910,11 +915,16 @@ const flows = {
                 // No background - let animation show through
                 
                 // Draw error message at the very top
+                ctx.save();
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.textBaseline = 'alphabetic';
                 ctx.fillStyle = '#fff';
-                ctx.font = scaleSize(14) + 'px Barlow Light';
+                ctx.font = `300 ${scaleSize(14)}px 'Barlow', sans-serif`;
                 ctx.textAlign = 'left';
-                ctx.fillText('Unit', scaleX(55), scaleY(35));
-                ctx.fillText('Disconnected', scaleX(55), scaleY(50));
+                ctx.fillText('Unit', scaleX(55), CENTER_Y - scaleSize(5));
+                ctx.fillText('Disconnected', scaleX(55), CENTER_Y + scaleSize(12));
+                ctx.restore();
             },
             led: { state: 'breathing', color: 'red' },
             onEnter: () => {
@@ -982,11 +992,16 @@ const flows = {
                 // No background - let animation show through
                 
                 // Draw error message at the very top
+                ctx.save();
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.textBaseline = 'alphabetic';
                 ctx.fillStyle = '#fff';
-                ctx.font = scaleSize(14) + 'px Barlow Light';
+                ctx.font = `300 ${scaleSize(14)}px 'Barlow', sans-serif`;
                 ctx.textAlign = 'left';
-                ctx.fillText('Unit', scaleX(55), scaleY(35));
-                ctx.fillText('Overheating', scaleX(55), scaleY(50));
+                ctx.fillText('Unit', scaleX(55), CENTER_Y - scaleSize(5));
+                ctx.fillText('Overheating', scaleX(55), CENTER_Y + scaleSize(12));
+                ctx.restore();
             },
             led: { state: 'breathing', color: 'red' },
             onEnter: () => {
@@ -1054,11 +1069,16 @@ const flows = {
                 // No background - let animation show through
                 
                 // Draw error message at the very top
+                ctx.save();
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.textBaseline = 'alphabetic';
                 ctx.fillStyle = '#fff';
-                ctx.font = scaleSize(14) + 'px Barlow Light';
+                ctx.font = `300 ${scaleSize(14)}px 'Barlow', sans-serif`;
                 ctx.textAlign = 'left';
-                ctx.fillText('Calibration', scaleX(55), scaleY(35));
-                ctx.fillText('Error', scaleX(55), scaleY(50));
+                ctx.fillText('Calibration', scaleX(55), CENTER_Y - scaleSize(5));
+                ctx.fillText('Error', scaleX(55), CENTER_Y + scaleSize(12));
+                ctx.restore();
             },
             led: { state: 'breathing', color: 'red' },
             onEnter: () => {
@@ -1126,11 +1146,16 @@ const flows = {
                 // No background - let animation show through
                 
                 // Draw error message at the very top
+                ctx.save();
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.textBaseline = 'alphabetic';
                 ctx.fillStyle = '#fff';
-                ctx.font = scaleSize(14) + 'px Barlow Light';
+                ctx.font = `300 ${scaleSize(14)}px 'Barlow', sans-serif`;
                 ctx.textAlign = 'left';
-                ctx.fillText('Contact', scaleX(55), scaleY(35));
-                ctx.fillText('Support', scaleX(55), scaleY(50));
+                ctx.fillText('Contact', scaleX(55), CENTER_Y - scaleSize(5));
+                ctx.fillText('Support', scaleX(55), CENTER_Y + scaleSize(12));
+                ctx.restore();
             },
             led: { state: 'breathing', color: 'red' },
             onEnter: () => {
@@ -1194,62 +1219,301 @@ const flows = {
        
     ],
     PreSetup: [
-        
         {
-            title: "Factory Settings",
-            explanation: "What will be seen when the unit is first powered on. Currently not added but it will be welcome message and push to connect device and download software.",
+            title: "Welcome Screen",
+            explanation: "First screen of the pre-setup flow showing welcome message for 5 seconds",
             draw: (ctx, frame) => {
                 ctx.fillStyle = '#000';
                 ctx.fillRect(0, 0, LCD_WIDTH, LCD_HEIGHT);
                 
-                if (true) {
-                    // Draw text at the top
-                ctx.fillStyle = '#fff';
-                    ctx.font = scaleSize(16) + 'px Barlow Light';
-                    ctx.fontWeight = '300';
-                    ctx.textAlign = 'center';
-                    ctx.fillText('Firmware 1.43', CENTER_X, scaleY(38));
-
-                ctx.fillStyle = '#fff';
-                    ctx.font = scaleSize(20) + 'px Barlow Light';
-                    ctx.fontWeight = '400';
-                ctx.textAlign = 'center';
-                    ctx.fillText('Ready', CENTER_X, scaleY(56));
+                // Apply fade transition if active
+                if (window.preSetupFadeOut) {
+                    ctx.globalAlpha = 1 - window.preSetupFadeProgress;
+                } else if (window.preSetupFadeIn) {
+                    ctx.globalAlpha = 1 - window.preSetupFadeProgress;
+                } else {
+                    ctx.globalAlpha = 1;
                 }
-
-                // Draw linked green icon in tray position
-                const linkedGreenImg = new Image();
-                linkedGreenImg.src = 'Assets/Reference/Linked Green.png';
-
-                if (linkedGreenImg.complete) {
-                    const traySize = scaleSize(12);
-                    const trayX = canvas.width - traySize - 10; // 10px from right edge
-                    const trayY = 50; // 50px from top
-
-                    const scale = traySize / Math.max(linkedGreenImg.width, linkedGreenImg.height);
-                    const drawWidth = linkedGreenImg.width * scale;
-                    const drawHeight = linkedGreenImg.height * scale;
-                    const drawX = trayX - drawWidth / 2;
-                    const drawY = trayY - drawHeight / 2;
-
-                    ctx.drawImage(linkedGreenImg, drawX, drawY, drawWidth, drawHeight);
-                }
+                
+                                // Draw welcome text - scaled to fit LCD overlay
+                ctx.save();
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.textBaseline = 'alphabetic';
+                ctx.fillStyle = '#fff';
+                ctx.textAlign = 'center';        
+                ctx.font = `300 ${scaleSize(14)}px 'Barlow', sans-serif`;
+                ctx.fillText('Welcome User!', CENTER_X, CENTER_Y - scaleSize(15));
+                ctx.fillText("Let's get started setting", CENTER_X, CENTER_Y + scaleSize(5));
+                ctx.fillText("up your new CLM.", CENTER_X, CENTER_Y + scaleSize(20));
+                ctx.restore();
+                
+                // Reset global alpha
+                ctx.globalAlpha = 1;
             },
             led: { state: 'breathing', color: 'yellow' },
             onEnter: () => {
+                // Auto-advance after 5 seconds with fade transition
+                setTimeout(() => {
+                    if (currentFlow === 'PreSetup' && currentStateIndex === 0) {
+                        // Start fade out transition
+                        window.preSetupFadeOut = true;
+                        window.preSetupFadeProgress = 0;
+                        
+                        const fadeOut = () => {
+                            if (window.preSetupFadeOut && window.preSetupFadeProgress < 1) {
+                                window.preSetupFadeProgress += 0.05; // 20 steps for smooth fade
+                                updateDisplay();
+                                requestAnimationFrame(fadeOut);
+                            } else if (window.preSetupFadeProgress >= 1) {
+                                // Fade out complete, switch to next screen
+                                window.preSetupFadeOut = false;
+                                window.preSetupFadeProgress = 0;
+                                currentStateIndex = 1;
+                                updateDisplay();
+                            }
+                        };
+                        fadeOut();
+                    }
+                }, 5000);
+                return null; // Return null to indicate no animation, so draw() will be called
+            }
+        },
+        {
+            title: "Download Software",
+            explanation: "Second screen asking user to download Rapsodo Studios Suite",
+            draw: (ctx, frame) => {
+                ctx.fillStyle = '#000';
+                ctx.fillRect(0, 0, LCD_WIDTH, LCD_HEIGHT);
+                
+                // Apply fade transition if active
+                if (window.preSetupFadeOut) {
+                    ctx.globalAlpha = 1 - window.preSetupFadeProgress;
+                } else if (window.preSetupFadeIn) {
+                    ctx.globalAlpha = 1 - window.preSetupFadeProgress;
+                } else {
+                    ctx.globalAlpha = 1;
+                }
+                
+                // Draw download icon (simplified computer icon) - scaled to fit LCD overlay
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = scaleSize(1.5);
+                ctx.strokeRect(CENTER_X - scaleSize(15), CENTER_Y - scaleSize(25), scaleSize(30), scaleSize(24));
+                
+                // Draw monitor stand
+                ctx.beginPath();
+                ctx.moveTo(CENTER_X - scaleSize(4), CENTER_Y - scaleSize(13));
+                ctx.lineTo(CENTER_X - scaleSize(8), CENTER_Y - scaleSize(5));
+                ctx.lineTo(CENTER_X + scaleSize(8), CENTER_Y - scaleSize(5));
+                ctx.lineTo(CENTER_X + scaleSize(4), CENTER_Y - scaleSize(13));
+                ctx.stroke();
+                
+                // Draw download arrow
+                ctx.beginPath();
+                ctx.moveTo(CENTER_X, CENTER_Y - scaleSize(7));
+                ctx.lineTo(CENTER_X, CENTER_Y + scaleSize(1));
+                ctx.moveTo(CENTER_X - scaleSize(4), CENTER_Y - scaleSize(3));
+                ctx.lineTo(CENTER_X, CENTER_Y + scaleSize(1));
+                ctx.moveTo(CENTER_X + scaleSize(4), CENTER_Y - scaleSize(3));
+                ctx.stroke();
+                
+                // Draw text
+                ctx.save();
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.textBaseline = 'alphabetic';
+                ctx.fillStyle = '#fff';
+                ctx.font = `300 ${scaleSize(14)}px 'Barlow', sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.fillText('Download the', CENTER_X, CENTER_Y + scaleSize(10));
+                ctx.fillText('Rapsodo Studios Suite', CENTER_X, CENTER_Y + scaleSize(25));
+                ctx.restore();
+                
+                // Draw pagination dots
+                ctx.fillStyle = '#666';
+                ctx.beginPath();
+                ctx.arc(CENTER_X - scaleSize(6), CENTER_Y + scaleSize(35), scaleSize(2.5), 0, 2 * Math.PI);
+                ctx.fill();
+                
+                ctx.fillStyle = '#fff';
+                ctx.beginPath();
+                ctx.arc(CENTER_X + scaleSize(6), CENTER_Y + scaleSize(35), scaleSize(2.5), 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Reset global alpha
+                ctx.globalAlpha = 1;
+            },
+            led: { state: 'breathing', color: 'yellow' },
+            onEnter: () => {
+                // Start fade in if coming from welcome screen
+                if (window.preSetupFadeOut === false && window.preSetupFadeProgress === 0) {
+                    window.preSetupFadeIn = true;
+                    window.preSetupFadeProgress = 1;
+                    
+                    const fadeIn = () => {
+                        if (window.preSetupFadeIn && window.preSetupFadeProgress > 0) {
+                            window.preSetupFadeProgress -= 0.05; // 20 steps for smooth fade
+                            updateDisplay();
+                            requestAnimationFrame(fadeIn);
+                        } else if (window.preSetupFadeProgress <= 0) {
+                            // Fade in complete
+                            window.preSetupFadeIn = false;
+                            window.preSetupFadeProgress = 0;
+                        }
+                    };
+                    fadeIn();
+                }
+                
+                // Start rotation timer
+                if (!window.preSetupRotationTimer) {
+                    window.preSetupRotationTimer = setInterval(() => {
+                        if (currentFlow === 'PreSetup' && currentStateIndex >= 1) {
+                            // Start fade out transition
+                            window.preSetupFadeOut = true;
+                            window.preSetupFadeProgress = 0;
+                            
+                            const fadeOut = () => {
+                                if (window.preSetupFadeOut && window.preSetupFadeProgress < 1) {
+                                    window.preSetupFadeProgress += 0.05; // 20 steps for smooth fade
+                                    updateDisplay();
+                                    requestAnimationFrame(fadeOut);
+                                } else if (window.preSetupFadeProgress >= 1) {
+                                    // Fade out complete, switch to next screen
+                                    window.preSetupFadeOut = false;
+                                    window.preSetupFadeProgress = 0;
+                                    currentStateIndex = currentStateIndex === 1 ? 2 : 1;
+                                    updateDisplay();
+                                }
+                            };
+                            fadeOut();
+                        }
+                    }, 3000); // Switch every 3 seconds
+                }
+                return null; // Return null to indicate no animation, so draw() will be called
+            },
+            onExit: () => {
+                // Clear rotation timer when leaving this flow
+                if (window.preSetupRotationTimer) {
+                    clearInterval(window.preSetupRotationTimer);
+                    window.preSetupRotationTimer = null;
+                }
+                
+                // Clear fade transition states
+                window.preSetupFadeOut = false;
+                window.preSetupFadeIn = false;
+                window.preSetupFadeProgress = 0;
+            }
+        },
+        {
+            title: "Connect to PC",
+            explanation: "Third screen asking user to connect to PC using ethernet cable with plugin animation",
+            draw: (ctx, frame) => {
+                ctx.fillStyle = '#000';
+                ctx.fillRect(0, 0, LCD_WIDTH, LCD_HEIGHT);
+                
+                // Apply fade transition if active
+                if (window.preSetupFadeOut) {
+                    ctx.globalAlpha = 1 - window.preSetupFadeProgress;
+                } else if (window.preSetupFadeIn) {
+                    ctx.globalAlpha = 1 - window.preSetupFadeProgress;
+                } else {
+                    ctx.globalAlpha = 1;
+                }
+                
+                // Draw text
+                ctx.save();
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.textBaseline = 'alphabetic';
+                ctx.fillStyle = '#fff';
+                ctx.font = `300 ${scaleSize(14)}px 'Barlow', sans-serif`;
+                ctx.textAlign = 'center';
+                ctx.fillText('Connect to PC using', CENTER_X, CENTER_Y + scaleSize(10));
+                ctx.fillText('ethernet Cable', CENTER_X, CENTER_Y + scaleSize(25));
+                ctx.restore();
+                
+                // Draw pagination dots
+                ctx.fillStyle = '#fff';
+                ctx.beginPath();
+                ctx.arc(CENTER_X - scaleSize(6), CENTER_Y + scaleSize(35), scaleSize(2.5), 0, 2 * Math.PI);
+                ctx.fill();
+                
+                ctx.fillStyle = '#666';
+                ctx.beginPath();
+                ctx.arc(CENTER_X + scaleSize(6), CENTER_Y + scaleSize(35), scaleSize(2.5), 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // Reset global alpha
+                ctx.globalAlpha = 1;
+            },
+            led: { state: 'breathing', color: 'yellow' },
+            onEnter: () => {
+                // Start fade in if coming from previous screen
+                if (window.preSetupFadeOut === false && window.preSetupFadeProgress === 0) {
+                    window.preSetupFadeIn = true;
+                    window.preSetupFadeProgress = 1;
+                    
+                    const fadeIn = () => {
+                        if (window.preSetupFadeIn && window.preSetupFadeProgress > 0) {
+                            window.preSetupFadeProgress -= 0.05; // 20 steps for smooth fade
+                            updateDisplay();
+                            requestAnimationFrame(fadeIn);
+                        } else if (window.preSetupFadeProgress <= 0) {
+                            // Fade in complete
+                            window.preSetupFadeIn = false;
+                            window.preSetupFadeProgress = 0;
+                        }
+                    };
+                    fadeIn();
+                }
+                
+                // Continue rotation timer from previous screen
+                
+                // Create plugin animation container (using same approach as error states)
+                const gifContainer = document.createElement('div');
+                gifContainer.style.position = 'absolute';
+                gifContainer.style.top = 0 + 'px';
+                gifContainer.style.left = 0 + 'px';
+                gifContainer.style.width = canvas.width + 'px';
+                gifContainer.style.height = canvas.height + 'px';
+                gifContainer.style.zIndex = '0';
+                gifContainer.style.pointerEvents = 'none';
+                canvas.parentNode.appendChild(gifContainer);
+                
+                // Create and position the plugin animation GIF
+                const img = document.createElement('img');
+                img.src = 'Assets/Main Gif/plugin.gif';
+                img.style.position = 'absolute';
+                img.style.width = scaleSize(90) + 'px';
+                img.style.height = 'auto';
+                img.style.objectFit = 'contain';
+                
+                // Position the plugin animation at the center top area
+                const centerX = CENTER_X - scaleSize(20);
+                const centerY = CENTER_Y - scaleSize(15);
+                
+                img.style.left = (centerX - scaleSize(22.5)) + 'px';
+                img.style.top = (centerY - scaleSize(22.5)) + 'px';
+                
+                gifContainer.appendChild(img);
+                
                 let frame = 0;
                 const animate = () => {
                     const currentStates = flows[currentFlow];
                     const currentState = currentStates[currentStateIndex];
-                    if (currentState.title === "Update Ready") {
+                    if (currentState.title === "Connect to PC") {
                         currentState.draw(ctx, frame++);
                         requestAnimationFrame(animate);
+                    } else {
+                        // Cleanup when switching away
+                        if (gifContainer.parentNode) {
+                            gifContainer.parentNode.removeChild(gifContainer);
+                        }
                     }
                 };
                 animate();
             }
-        },
-       
+        }
     ],
     // levelling: [
     //     {
@@ -2267,6 +2531,11 @@ const flows = {
 // Initialize canvas
 const canvas = document.getElementById('lcdCanvas');
 const ctx = canvas.getContext('2d');
+
+// Set canvas text rendering quality
+ctx.imageSmoothingEnabled = true;
+ctx.imageSmoothingQuality = 'high';
+ctx.textBaseline = 'alphabetic';
 let currentStateIndex = 0;
 let currentFlow = 'power'; // Set initial flow to power
 let currentAnimation = null;
@@ -2532,6 +2801,10 @@ function updateDisplay() {
     // Handle animation setup
     if (currentState.onEnter) {
         currentAnimation = currentState.onEnter();
+        // If onEnter returns null, we still need to draw the state
+        if (!currentAnimation) {
+            currentState.draw(ctx);
+        }
     } else {
         // Draw current state if no animation
         currentState.draw(ctx);

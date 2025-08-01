@@ -1,0 +1,114 @@
+.connect0001-0064-1 {
+    position: absolute;
+    top: 240.09px;
+    left: 0.22px;
+    width: 180.7px;
+    height: 65.2px;
+    transform:  rotate(-90deg);
+    transform-origin: 0 0;
+}
+.group-child {
+    position: absolute;
+    top: 33.29px;
+    left: 0px;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    box-sizing: border-box;
+    width: 33.3px;
+    height: 33.3px;
+    transform:  rotate(-90deg);
+    transform-origin: 0 0;
+}
+.div {
+    position: absolute;
+    top: 23.64px;
+    left: 1.26px;
+    line-height: 107%;
+    transform:  rotate(-90deg);
+    transform-origin: 0 0;
+}
+.ellipse-parent {
+    position: absolute;
+    top: 257.05px;
+    left: 16.38px;
+    width: 33.3px;
+    height: 33.3px;
+}
+.connect-to-pc {
+    margin: 0;
+}
+.place-ball1 {
+    position: absolute;
+    top: 26.71%;
+    left: -15.07%;
+    line-height: 107%;
+}
+.place-ball {
+    position: absolute;
+    top: 251.39px;
+    left: 32.8px;
+    width: 219px;
+    height: 146px;
+    transform:  rotate(-90deg);
+    transform-origin: 0 0;
+    font-size: 32px;
+}
+.instance-child {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    right: 0%;
+    bottom: 0%;
+    left: 0%;
+    border-radius: 50%;
+    background-color: rgba(217, 217, 217, 0);
+    border: 1px solid #d9d9d9;
+    box-sizing: border-box;
+}
+.ellipse-wrapper {
+    position: absolute;
+    top: calc(50% + 17.72px);
+    left: calc(50% - 6px);
+    width: 12px;
+    height: 12px;
+    transform:  rotate(-90deg);
+    transform-origin: 0 0;
+}
+.instance-item {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    right: 0%;
+    bottom: 0%;
+    left: 0%;
+    border-radius: 50%;
+    background-color: #d9d9d9;
+}
+.ellipse-container {
+    position: absolute;
+    top: calc(50% - 5.7px);
+    left: calc(50% - 6px);
+    width: 12px;
+    height: 12px;
+    transform:  rotate(-90deg);
+    transform-origin: 0 0;
+}
+.instance-parent {
+    position: absolute;
+    top: calc(50% - 24.91px);
+    left: calc(50% + 66.52px);
+    width: 12px;
+    height: 35.4px;
+}
+.connect0001-0064-1-parent {
+    width: 100%;
+    position: relative;
+    height: 290px;
+    text-align: center;
+    font-size: 25.53px;
+    color: #fff;
+    font-family: Barlow;
+}
+
