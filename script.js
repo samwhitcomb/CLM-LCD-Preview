@@ -674,7 +674,11 @@ const flows = {
                 ctx.font = scaleSize(15) + 'px Barlow Light';
                 ctx.fontWeight = '300';
                 ctx.textAlign = 'center';
-                ctx.fillText('Fw 1.43', CENTER_X, scaleY(25));
+                ctx.fillText('Fw 1.43', CENTER_X, scaleY(22));
+                ctx.font = scaleSize(12) + 'px Barlow Light';
+                ctx.fontWeight = '300';
+                ctx.textAlign = 'center';
+                ctx.fillText('Do not Disconnect', CENTER_X, scaleY(32));
                 
                 // Calculate progress and time
                 const totalDuration = 30; // 30 seconds total
@@ -691,7 +695,7 @@ const flows = {
                 const barWidth = 300; // Full width
                 const barHeight = 12;
                 const barX = (320 - barWidth) / 2;
-                const barY = 95; // Moved up slightly
+                const barY = 110; // Moved up slightly
                 const radius = barHeight / 2;
                 
                 // Draw background bar
@@ -732,7 +736,7 @@ const flows = {
                 ctx.font = scaleSize(32) + 'px Barlow Light';
                 ctx.textAlign = 'right';
                 const timeText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-                ctx.fillText(timeText, 215, 173);
+                ctx.fillText(timeText, 215, 190);
                 
                               // Lightning bolt removed
                 
