@@ -607,14 +607,21 @@ const flows = {
                 
 
 
-                // Show text immediately since lightning bolt is removed
+                // Show alternating text every 3 seconds
+                const showFirmware = Math.floor(frame / 180) % 2 === 0; // Switch every 3 seconds (180 frames at 60fps)
+                
                 if (true) {
                     // Draw text at the top
                     ctx.fillStyle = '#fff';
                     ctx.font = scaleSize(16) + 'px Barlow Light';
                     ctx.fontWeight = '300';
                     ctx.textAlign = 'center';
-                    ctx.fillText('Firmware 1.43', CENTER_X, scaleY(38));
+                    
+                    if (showFirmware) {
+                        ctx.fillText('Firmware 1.43', CENTER_X, scaleY(38));
+                    } else {
+                        ctx.fillText('Do not disconnect', CENTER_X, scaleY(38));
+                    }
 
                     ctx.fillStyle = '#fff';
                     ctx.font = scaleSize(20) + 'px Barlow Light';
@@ -721,10 +728,11 @@ const flows = {
                 }
                 
                 
-                // Draw countdown at bottom right
+                // Draw countdown at bottom right (static position)
                 ctx.font = scaleSize(32) + 'px Barlow Light';
                 ctx.textAlign = 'right';
-                ctx.fillText(`${minutes}:${seconds.toString().padStart(2, '0')}`, 215, 180);
+                const timeText = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                ctx.fillText(timeText, 215, 173);
                 
                               // Lightning bolt removed
                 
@@ -814,6 +822,11 @@ const flows = {
             },
             led: { state: 'on', color: 'green' },
             onEnter: () => {
+                // Play success sound
+                const successSound = new Audio('Assets/game sounds/success3.mp3');
+                successSound.volume = 0.5;
+                successSound.play().catch(e => console.log('Audio play failed:', e));
+                
                 let frame = 0;
                 const animate = () => {
                     const currentStates = flows[currentFlow];
@@ -874,7 +887,7 @@ const flows = {
                 gifContainer.appendChild(img);
 
                 // Play error sound
-                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
+                const errorSound1 = new Audio('Assets/game sounds/neg3.mp3');
                 errorSound1.volume = 0.5;
                 errorSound1.play().catch(e => console.log('Audio play failed:', e));
 
@@ -951,7 +964,7 @@ const flows = {
                 gifContainer.appendChild(img);
 
                 // Play error sound
-                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
+                const errorSound1 = new Audio('Assets/game sounds/neg3.mp3');
                 errorSound1.volume = 0.5;
                 errorSound1.play().catch(e => console.log('Audio play failed:', e));
 
@@ -1028,7 +1041,7 @@ const flows = {
                 gifContainer.appendChild(img);
 
                 // Play error sound
-                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
+                const errorSound1 = new Audio('Assets/game sounds/neg3.mp3');
                 errorSound1.volume = 0.5;
                 errorSound1.play().catch(e => console.log('Audio play failed:', e));
 
@@ -1105,7 +1118,7 @@ const flows = {
                 gifContainer.appendChild(img);
 
                 // Play error sound
-                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
+                const errorSound1 = new Audio('Assets/game sounds/neg3.mp3');
                 errorSound1.volume = 0.5;
                 errorSound1.play().catch(e => console.log('Audio play failed:', e));
 
@@ -1295,27 +1308,23 @@ const flows = {
                     ctx.globalAlpha = 1;
                 }
                 
-                // Draw download icon (simplified computer icon) - scaled to fit LCD overlay
-                ctx.strokeStyle = '#fff';
-                ctx.lineWidth = scaleSize(1.5);
-                ctx.strokeRect(CENTER_X - scaleSize(15), CENTER_Y - scaleSize(25), scaleSize(30), scaleSize(24));
+                // Draw computer icon from SVG
+                const computerImg = new Image();
+                computerImg.src = 'Assets/Reference/Computer.svg';
                 
-                // Draw monitor stand
-                ctx.beginPath();
-                ctx.moveTo(CENTER_X - scaleSize(4), CENTER_Y - scaleSize(13));
-                ctx.lineTo(CENTER_X - scaleSize(8), CENTER_Y - scaleSize(5));
-                ctx.lineTo(CENTER_X + scaleSize(8), CENTER_Y - scaleSize(5));
-                ctx.lineTo(CENTER_X + scaleSize(4), CENTER_Y - scaleSize(13));
-                ctx.stroke();
-                
-                // Draw download arrow
-                ctx.beginPath();
-                ctx.moveTo(CENTER_X, CENTER_Y - scaleSize(7));
-                ctx.lineTo(CENTER_X, CENTER_Y + scaleSize(1));
-                ctx.moveTo(CENTER_X - scaleSize(4), CENTER_Y - scaleSize(3));
-                ctx.lineTo(CENTER_X, CENTER_Y + scaleSize(1));
-                ctx.moveTo(CENTER_X + scaleSize(4), CENTER_Y - scaleSize(3));
-                ctx.stroke();
+                if (computerImg.complete) {
+                    const iconSize = scaleSize(25);
+                    const iconX = CENTER_X - iconSize / 2;
+                    const iconY = CENTER_Y - scaleSize(22) - iconSize / 2;
+                    
+                    const scale = iconSize / Math.max(computerImg.width, computerImg.height);
+                    const drawWidth = computerImg.width * scale;
+                    const drawHeight = computerImg.height * scale;
+                    const drawX = iconX + (iconSize - drawWidth) / 2;
+                    const drawY = iconY + (iconSize - drawHeight) / 2;
+                    
+                    ctx.drawImage(computerImg, drawX, drawY, drawWidth, drawHeight);
+                }
                 
                 // Draw text
                 ctx.save();
@@ -1329,11 +1338,12 @@ const flows = {
                 ctx.fillText('Rapsodo Studios Suite', CENTER_X, CENTER_Y + scaleSize(25));
                 ctx.restore();
                 
-                // Draw pagination dots
-                ctx.fillStyle = '#666';
+                // Draw pagination slots
+                ctx.strokeStyle = '#666';
+                ctx.lineWidth = scaleSize(1);
                 ctx.beginPath();
                 ctx.arc(CENTER_X - scaleSize(6), CENTER_Y + scaleSize(35), scaleSize(2.5), 0, 2 * Math.PI);
-                ctx.fill();
+                ctx.stroke();
                 
                 ctx.fillStyle = '#fff';
                 ctx.beginPath();
@@ -1432,16 +1442,17 @@ const flows = {
                 ctx.fillText('ethernet Cable', CENTER_X, CENTER_Y + scaleSize(25));
                 ctx.restore();
                 
-                // Draw pagination dots
+                // Draw pagination slots
                 ctx.fillStyle = '#fff';
                 ctx.beginPath();
                 ctx.arc(CENTER_X - scaleSize(6), CENTER_Y + scaleSize(35), scaleSize(2.5), 0, 2 * Math.PI);
                 ctx.fill();
                 
-                ctx.fillStyle = '#666';
+                ctx.strokeStyle = '#666';
+                ctx.lineWidth = scaleSize(1);
                 ctx.beginPath();
                 ctx.arc(CENTER_X + scaleSize(6), CENTER_Y + scaleSize(35), scaleSize(2.5), 0, 2 * Math.PI);
-                ctx.fill();
+                ctx.stroke();
                 
                 // Reset global alpha
                 ctx.globalAlpha = 1;
@@ -1955,7 +1966,7 @@ const flows = {
                         if (frame === 180) { // After 3 seconds - connection fails
                             connectionState = 'failed';
                             // Play error sound when connection fails
-                            const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
+                            const errorSound1 = new Audio('Assets/game sounds/neg3.mp3');
                             errorSound1.volume = 0.5;
                             errorSound1.play().catch(e => console.log('Audio play failed:', e));
                         }
@@ -2037,7 +2048,7 @@ const flows = {
                         } else if (frame === 420) { // After 7 seconds - internet connection fails
                             connectionState = 'internet_failed';
                             // Play error sound when internet connection fails
-                            const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
+                            const errorSound1 = new Audio('Assets/game sounds/neg3.mp3');
                             errorSound1.volume = 0.5;
                             errorSound1.play().catch(e => console.log('Audio play failed:', e));
                         }
@@ -4291,7 +4302,7 @@ function updateBallState() {
         }
 
         // Play error sound
-                const errorSound1 = new Audio('Assets/game sounds/error3.mp3');
+                const errorSound1 = new Audio('Assets/game sounds/neg3.mp3');
                 errorSound1.volume = 0.5;
                 errorSound1.play().catch(e => console.log('Audio play failed:', e));
         
