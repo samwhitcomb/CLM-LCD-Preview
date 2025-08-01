@@ -607,28 +607,18 @@ const flows = {
                 
 
 
-                // Show alternating text every 3 seconds
-                const showFirmware = Math.floor(frame / 180) % 2 === 0; // Switch every 3 seconds (180 frames at 60fps)
-                
-                if (true) {
-                    // Draw text at the top
-                    ctx.fillStyle = '#fff';
-                    ctx.font = scaleSize(16) + 'px Barlow Light';
-                    ctx.fontWeight = '300';
-                    ctx.textAlign = 'center';
-                    
-                    if (showFirmware) {
-                        ctx.fillText('Firmware 1.43', CENTER_X, scaleY(38));
-                    } else {
-                        ctx.fillText('Do not disconnect', CENTER_X, scaleY(38));
-                    }
+                // Draw firmware number only
+                ctx.fillStyle = '#fff';
+                ctx.font = scaleSize(16) + 'px Barlow Light';
+                ctx.fontWeight = '300';
+                ctx.textAlign = 'center';
+                ctx.fillText('Firmware 1.43', CENTER_X, scaleY(38));
 
-                    ctx.fillStyle = '#fff';
-                    ctx.font = scaleSize(20) + 'px Barlow Light';
-                    ctx.fontWeight = '400';
-                    ctx.textAlign = 'center';
-                    ctx.fillText('Ready', CENTER_X, scaleY(56));
-                }
+                ctx.fillStyle = '#fff';
+                ctx.font = scaleSize(20) + 'px Barlow Light';
+                ctx.fontWeight = '400';
+                ctx.textAlign = 'center';
+                ctx.fillText('Ready', CENTER_X, scaleY(56));
 
                 // Draw linked green icon in tray position
                 const linkedGreenImg = new Image();
@@ -675,10 +665,15 @@ const flows = {
                 ctx.fontWeight = '300';
                 ctx.textAlign = 'center';
                 ctx.fillText('Fw 1.43', CENTER_X, scaleY(22));
+                // Breathing opacity effect for "Do not Disconnect" message
+                ctx.save(); // Save current context state
+                const breathingOpacity = 0.3 + 0.7 * Math.sin(frame * 0.03); // Breathing between 0.3 and 1.0 opacity
+                ctx.fillStyle = `rgba(255, 255, 255, ${breathingOpacity})`; // White with breathing opacity
                 ctx.font = scaleSize(12) + 'px Barlow Light';
                 ctx.fontWeight = '300';
                 ctx.textAlign = 'center';
                 ctx.fillText('Do not Disconnect', CENTER_X, scaleY(32));
+                ctx.restore(); // Restore context state
                 
                 // Calculate progress and time
                 const totalDuration = 30; // 30 seconds total
