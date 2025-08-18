@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LCD Device Simulator</title>
+    <title>LCD Device Simulator - Español</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         @font-face {
@@ -21,14 +21,17 @@
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script>
+        window.APP_LANG = 'es';
+    </script>
 </head>
 <body>
     <div class="language-selector">
-        <a href="index.html" class="lang-link active">EN</a>
+        <a href="index.html" class="lang-link">EN</a>
         <span class="lang-sep">|</span>
         <a href="Japanese.html" class="lang-link">日本語</a>
         <span class="lang-sep">|</span>
-        <a href="Spanish.html" class="lang-link">Español</a>
+        <a href="Spanish.html" class="lang-link active">Español</a>
         <span class="lang-sep">|</span>
         <a href="French.html" class="lang-link">Français</a>
         <span class="lang-sep">|</span>
@@ -77,47 +80,8 @@
         </div>
     </div>
     <script>
-        // Set default language for this page
-        window.APP_LANG = 'en';
         (function() {
             const translations = {
-                ja: {
-                    'Shutting down': 'シャットダウン中',
-                    'Firmware 1.43': 'ファームウェア 1.43',
-                    'Fw 1.43': 'FW 1.43',
-                    'Ready': '準備完了',
-                    'Do not Disconnect': '切断しないでください',
-                    'Firmware': 'ファームウェア',
-                    'Update Failed': 'アップデート失敗',
-                    'Unit': 'ユニット',
-                    'Disconnected': '切断されました',
-                    'Overheating': '過熱中',
-                    'Calibration': 'キャリブレーション',
-                    'Error': 'エラー',
-                    'Contact': 'お問い合わせ',
-                    'Support': 'サポート',
-                    'Welcome User!': 'ユーザー様、ようこそ！',
-                    'Let\'s get started setting': '新しいCLMの設定を',
-                    'up your new CLM.': '始めましょう。',
-                    'Download the': 'ダウンロードしてください',
-                    'Rapsodo Studios Suite': 'ラプソド スタジオスイート',
-                    'Connect to PC using': 'イーサネットケーブルで',
-                    'ethernet Cable': 'PCに接続してください',
-                    'Connecting to Device': 'デバイスに接続中',
-                    'Connecting to Internet': 'インターネットに接続中',
-                    'Connected': '接続完了',
-                    'Connection Failed': '接続失敗',
-                    'Internet Connection Failed': 'インターネット接続失敗',
-                    'Connecting to Computer': 'コンピューターに接続中',
-                    'Computer Connected': 'コンピューター接続完了',
-                    'Internet Connected': 'インターネット接続完了',
-                    'Update Complete': 'アップデート完了',
-                    'Linking Complete': 'リンク完了',
-                    'PLACE BALL': 'ボールを置いてください',
-                    'MULTIPLE BALLS': '複数のボールが',
-                    'DETECTED': '検出されました',
-                    'READY': '準備完了'
-                },
                 es: {
                     'Shutting down': 'Apagando',
                     'Firmware 1.43': 'Firmware 1.43',
@@ -156,7 +120,7 @@
                     'READY': 'LISTO'
                 }
             };
-            const lang = (window.APP_LANG || 'en');
+            const lang = (window.APP_LANG || 'es');
             const proto = CanvasRenderingContext2D && CanvasRenderingContext2D.prototype;
             if (!proto || proto.__i18nPatched) return;
             function translate(text) {
@@ -228,7 +192,7 @@
                 return { lines, lineHeight };
             }
             function drawWrapped(drawFunc, ctx, text, x, y, targetWidth) {
-                const { lines, lineHeight } = buildLines(ctx, text, targetWidth, (window.APP_LANG || 'en'));
+                const { lines, lineHeight } = buildLines(ctx, text, targetWidth, (window.APP_LANG || 'es'));
                 if (lines.length === 0) return;
                 for (let i = 0; i < lines.length; i++) {
                     drawFunc.call(ctx, lines[i], x, y + i * lineHeight);
@@ -236,11 +200,10 @@
             }
             function fitAndDraw(drawFunc, ctx, text, x, y, maxWidth) {
                 const translated = translate(text);
-                if (translated === '') return; // allow combined translations to suppress a line
+                if (translated === '') return;
                 if (ctx && ctx.__i18nDisableAutoFit) {
                     return drawFunc.call(ctx, translated, x, y);
                 }
-                // Determine target width: prefer provided maxWidth, else canvas width minus margins
                 const canvasWidth = ctx && ctx.canvas ? ctx.canvas.width : undefined;
                 const margin = 16;
                 let targetWidth = maxWidth || (canvasWidth ? Math.max(0, canvasWidth - margin * 2) : undefined);
@@ -257,22 +220,29 @@
                     }
                 }
                 if (!targetWidth) return drawFunc.call(ctx, translated, x, y);
-                // If text belongs to a group, compute a shared scale across the whole group
                 const groupId = getGroupIdForText(text);
                 if (groupId) {
                     const originalFont = ctx.font;
-                    // Measure the widest translated member using current font
                     let maxWidthInGroup = 0;
                     for (const member of groups[groupId]) {
                         const t = translate(member);
                         const w = ctx.measureText(t).width;
                         if (w > maxWidthInGroup) maxWidthInGroup = w;
                     }
-                    // Draw wrapped to keep consistent size across lines
-                    drawWrapped(drawFunc, ctx, translated, x, y, targetWidth);
-                    return;
+                    if (maxWidthInGroup > targetWidth) {
+                        const match = originalFont.match(/(\d+(?:\.\d+)?)px/);
+                        if (match) {
+                            const originalPx = parseFloat(match[1]);
+                            const scale = Math.max(0.7, targetWidth / maxWidthInGroup);
+                            const newPx = (originalPx * scale).toFixed(2);
+                            ctx.font = originalFont.replace(/\d+(?:\.\d+)?px/, newPx + 'px');
+                            drawFunc.call(ctx, translated, x, y);
+                            ctx.font = originalFont;
+                            return;
+                        }
+                    }
+                    return drawFunc.call(ctx, translated, x, y);
                 }
-                // Draw wrapped for single line cases as well
                 drawWrapped(drawFunc, ctx, translated, x, y, targetWidth);
                 return;
             }
@@ -287,4 +257,6 @@
     </script>
     <script src="script.js"></script>
 </body>
-</html> 
+</html>
+
+

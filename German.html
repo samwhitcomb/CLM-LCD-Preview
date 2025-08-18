@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LCD Device Simulator</title>
+    <title>LCD Device Simulator - Deutsch</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         @font-face {
@@ -21,10 +21,13 @@
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script>
+        window.APP_LANG = 'de';
+    </script>
 </head>
 <body>
     <div class="language-selector">
-        <a href="index.html" class="lang-link active">EN</a>
+        <a href="index.html" class="lang-link">EN</a>
         <span class="lang-sep">|</span>
         <a href="Japanese.html" class="lang-link">日本語</a>
         <span class="lang-sep">|</span>
@@ -32,7 +35,7 @@
         <span class="lang-sep">|</span>
         <a href="French.html" class="lang-link">Français</a>
         <span class="lang-sep">|</span>
-        <a href="German.html" class="lang-link">Deutsch</a>
+        <a href="German.html" class="lang-link active">Deutsch</a>
     </div>
     <div class="container">
         <div class="device-container">
@@ -77,86 +80,47 @@
         </div>
     </div>
     <script>
-        // Set default language for this page
-        window.APP_LANG = 'en';
         (function() {
             const translations = {
-                ja: {
-                    'Shutting down': 'シャットダウン中',
-                    'Firmware 1.43': 'ファームウェア 1.43',
-                    'Fw 1.43': 'FW 1.43',
-                    'Ready': '準備完了',
-                    'Do not Disconnect': '切断しないでください',
-                    'Firmware': 'ファームウェア',
-                    'Update Failed': 'アップデート失敗',
-                    'Unit': 'ユニット',
-                    'Disconnected': '切断されました',
-                    'Overheating': '過熱中',
-                    'Calibration': 'キャリブレーション',
-                    'Error': 'エラー',
-                    'Contact': 'お問い合わせ',
-                    'Support': 'サポート',
-                    'Welcome User!': 'ユーザー様、ようこそ！',
-                    'Let\'s get started setting': '新しいCLMの設定を',
-                    'up your new CLM.': '始めましょう。',
-                    'Download the': 'ダウンロードしてください',
-                    'Rapsodo Studios Suite': 'ラプソド スタジオスイート',
-                    'Connect to PC using': 'イーサネットケーブルで',
-                    'ethernet Cable': 'PCに接続してください',
-                    'Connecting to Device': 'デバイスに接続中',
-                    'Connecting to Internet': 'インターネットに接続中',
-                    'Connected': '接続完了',
-                    'Connection Failed': '接続失敗',
-                    'Internet Connection Failed': 'インターネット接続失敗',
-                    'Connecting to Computer': 'コンピューターに接続中',
-                    'Computer Connected': 'コンピューター接続完了',
-                    'Internet Connected': 'インターネット接続完了',
-                    'Update Complete': 'アップデート完了',
-                    'Linking Complete': 'リンク完了',
-                    'PLACE BALL': 'ボールを置いてください',
-                    'MULTIPLE BALLS': '複数のボールが',
-                    'DETECTED': '検出されました',
-                    'READY': '準備完了'
-                },
-                es: {
-                    'Shutting down': 'Apagando',
+                de: {
+                    'Shutting down': 'Herunterfahren',
                     'Firmware 1.43': 'Firmware 1.43',
                     'Fw 1.43': 'Firmware 1.43',
-                    'Ready': 'Listo',
-                    'Do not Disconnect': 'No desconectar',
+                    'Ready': 'Bereit',
+                    'Do not Disconnect': 'Nicht trennen',
                     'Firmware': 'Firmware',
-                    'Update Failed': 'Actualización fallida',
-                    'Unit': 'Unidad',
-                    'Disconnected': 'Desconectada',
-                    'Overheating': 'Sobrecalentada',
-                    'Calibration': 'Calibración',
-                    'Error': 'Error',
-                    'Contact': 'Contactar',
-                    'Support': 'Soporte',
-                    'Welcome User!': '¡Bienvenido Usuario!',
-                    'Let\'s get started setting': 'Comencemos a configurar',
-                    'up your new CLM.': 'tu nuevo CLM.',
-                    'Download the': 'Descarga la',
-                    'Rapsodo Studios Suite': 'Suite Rapsodo Studios',
-                    'Connect to PC using': 'Conecta a PC usando',
-                    'ethernet Cable': 'cable Ethernet',
-                    'Connecting to Device': 'Conectando al dispositivo',
-                    'Connecting to Internet': 'Conectando a Internet',
-                    'Connected': 'Conectado',
-                    'Connection Failed': 'Conexión fallida',
-                    'Internet Connection Failed': 'Conexión a Internet fallida',
-                    'Connecting to Computer': 'Conectando a la computadora',
-                    'Computer Connected': 'Computadora conectada',
-                    'Internet Connected': 'Internet conectado',
-                    'Update Complete': 'Actualización completa',
-                    'Linking Complete': 'Vinculación completa',
-                    'PLACE BALL': 'COLOCAR PELOTA',
-                    'MULTIPLE BALLS': 'MÚLTIPLES PELOTAS',
-                    'DETECTED': 'DETECTADAS',
-                    'READY': 'LISTO'
+                    'Update Failed': 'Update fehlgeschlagen',
+                    'Unit': 'Einheit',
+                    'Disconnected': 'Getrennt',
+                    'Overheating': 'Überhitzt',
+                    'Calibration': 'Kalibrierung',
+                    'Error': 'Fehler',
+                    'Contact': 'Kontakt',
+                    'Support': 'Support',
+                    'Welcome User!': 'Willkommen Benutzer!',
+                    'Let\'s get started setting': 'Lassen Sie uns mit der Einrichtung',
+                    'up your new CLM.': 'Ihres neuen CLM beginnen.',
+                    'Download the': 'Laden Sie die',
+                    'Rapsodo Studios Suite': 'Rapsodo Studios Suite herunter',
+                    'Connect to PC using': 'Verbinden Sie mit PC über',
+                    'ethernet Cable': 'Ethernet-Kabel',
+                    'Connecting to Device': 'Verbinde mit Gerät',
+                    'Connecting to Internet': 'Verbinde mit Internet',
+                    'Connected': 'Verbunden',
+                    'Connection Failed': 'Verbindung fehlgeschlagen',
+                    'Internet Connection Failed': 'Internetverbindung fehlgeschlagen',
+                    'Connecting to Computer': 'Verbinde mit Computer',
+                    'Computer Connected': 'Computer verbunden',
+                    'Internet Connected': 'Internet verbunden',
+                    'Update Complete': 'Update abgeschlossen',
+                    'Linking Complete': 'Verknüpfung abgeschlossen',
+                    'PLACE BALL': 'BALL PLATZIEREN',
+                    'MULTIPLE BALLS': 'MEHRERE BÄLLE',
+                    'DETECTED': 'ERKANNT',
+                    'READY': 'BEREIT'
                 }
             };
-            const lang = (window.APP_LANG || 'en');
+            const lang = (window.APP_LANG || 'de');
             const proto = CanvasRenderingContext2D && CanvasRenderingContext2D.prototype;
             if (!proto || proto.__i18nPatched) return;
             function translate(text) {
@@ -228,7 +192,7 @@
                 return { lines, lineHeight };
             }
             function drawWrapped(drawFunc, ctx, text, x, y, targetWidth) {
-                const { lines, lineHeight } = buildLines(ctx, text, targetWidth, (window.APP_LANG || 'en'));
+                const { lines, lineHeight } = buildLines(ctx, text, targetWidth, (window.APP_LANG || 'de'));
                 if (lines.length === 0) return;
                 for (let i = 0; i < lines.length; i++) {
                     drawFunc.call(ctx, lines[i], x, y + i * lineHeight);
@@ -236,11 +200,10 @@
             }
             function fitAndDraw(drawFunc, ctx, text, x, y, maxWidth) {
                 const translated = translate(text);
-                if (translated === '') return; // allow combined translations to suppress a line
+                if (translated === '') return;
                 if (ctx && ctx.__i18nDisableAutoFit) {
                     return drawFunc.call(ctx, translated, x, y);
                 }
-                // Determine target width: prefer provided maxWidth, else canvas width minus margins
                 const canvasWidth = ctx && ctx.canvas ? ctx.canvas.width : undefined;
                 const margin = 16;
                 let targetWidth = maxWidth || (canvasWidth ? Math.max(0, canvasWidth - margin * 2) : undefined);
@@ -257,22 +220,13 @@
                     }
                 }
                 if (!targetWidth) return drawFunc.call(ctx, translated, x, y);
-                // If text belongs to a group, compute a shared scale across the whole group
                 const groupId = getGroupIdForText(text);
                 if (groupId) {
-                    const originalFont = ctx.font;
-                    // Measure the widest translated member using current font
-                    let maxWidthInGroup = 0;
-                    for (const member of groups[groupId]) {
-                        const t = translate(member);
-                        const w = ctx.measureText(t).width;
-                        if (w > maxWidthInGroup) maxWidthInGroup = w;
-                    }
-                    // Draw wrapped to keep consistent size across lines
+                    // Draw wrapped to keep consistent size across lines in the group
                     drawWrapped(drawFunc, ctx, translated, x, y, targetWidth);
                     return;
                 }
-                // Draw wrapped for single line cases as well
+                // Draw wrapped for single-line cases as well
                 drawWrapped(drawFunc, ctx, translated, x, y, targetWidth);
                 return;
             }
@@ -287,4 +241,4 @@
     </script>
     <script src="script.js"></script>
 </body>
-</html> 
+</html>

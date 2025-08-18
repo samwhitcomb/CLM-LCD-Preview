@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LCD Device Simulator</title>
+    <title>LCD Device Simulator - 日本語</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         @font-face {
@@ -21,12 +21,15 @@
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <script>
+        window.APP_LANG = 'ja';
+    </script>
 </head>
 <body>
     <div class="language-selector">
-        <a href="index.html" class="lang-link active">EN</a>
+        <a href="index.html" class="lang-link">EN</a>
         <span class="lang-sep">|</span>
-        <a href="Japanese.html" class="lang-link">日本語</a>
+        <a href="Japanese.html" class="lang-link active">日本語</a>
         <span class="lang-sep">|</span>
         <a href="Spanish.html" class="lang-link">Español</a>
         <span class="lang-sep">|</span>
@@ -77,15 +80,13 @@
         </div>
     </div>
     <script>
-        // Set default language for this page
-        window.APP_LANG = 'en';
         (function() {
             const translations = {
                 ja: {
                     'Shutting down': 'シャットダウン中',
                     'Firmware 1.43': 'ファームウェア 1.43',
                     'Fw 1.43': 'FW 1.43',
-                    'Ready': '準備完了',
+                    'Ready': 'オーケー',
                     'Do not Disconnect': '切断しないでください',
                     'Firmware': 'ファームウェア',
                     'Update Failed': 'アップデート失敗',
@@ -113,50 +114,13 @@
                     'Internet Connected': 'インターネット接続完了',
                     'Update Complete': 'アップデート完了',
                     'Linking Complete': 'リンク完了',
-                    'PLACE BALL': 'ボールを置いてください',
-                    'MULTIPLE BALLS': '複数のボールが',
-                    'DETECTED': '検出されました',
-                    'READY': '準備完了'
-                },
-                es: {
-                    'Shutting down': 'Apagando',
-                    'Firmware 1.43': 'Firmware 1.43',
-                    'Fw 1.43': 'Firmware 1.43',
-                    'Ready': 'Listo',
-                    'Do not Disconnect': 'No desconectar',
-                    'Firmware': 'Firmware',
-                    'Update Failed': 'Actualización fallida',
-                    'Unit': 'Unidad',
-                    'Disconnected': 'Desconectada',
-                    'Overheating': 'Sobrecalentada',
-                    'Calibration': 'Calibración',
-                    'Error': 'Error',
-                    'Contact': 'Contactar',
-                    'Support': 'Soporte',
-                    'Welcome User!': '¡Bienvenido Usuario!',
-                    'Let\'s get started setting': 'Comencemos a configurar',
-                    'up your new CLM.': 'tu nuevo CLM.',
-                    'Download the': 'Descarga la',
-                    'Rapsodo Studios Suite': 'Suite Rapsodo Studios',
-                    'Connect to PC using': 'Conecta a PC usando',
-                    'ethernet Cable': 'cable Ethernet',
-                    'Connecting to Device': 'Conectando al dispositivo',
-                    'Connecting to Internet': 'Conectando a Internet',
-                    'Connected': 'Conectado',
-                    'Connection Failed': 'Conexión fallida',
-                    'Internet Connection Failed': 'Conexión a Internet fallida',
-                    'Connecting to Computer': 'Conectando a la computadora',
-                    'Computer Connected': 'Computadora conectada',
-                    'Internet Connected': 'Internet conectado',
-                    'Update Complete': 'Actualización completa',
-                    'Linking Complete': 'Vinculación completa',
-                    'PLACE BALL': 'COLOCAR PELOTA',
-                    'MULTIPLE BALLS': 'MÚLTIPLES PELOTAS',
-                    'DETECTED': 'DETECTADAS',
-                    'READY': 'LISTO'
+                    'PLACE BALL': 'ボールをセット',
+                    'MULTIPLE BALLS': 'ボールは1つだけに',
+                    'DETECTED': 'してください',
+                    'READY': 'オーケー'
                 }
             };
-            const lang = (window.APP_LANG || 'en');
+            const lang = (window.APP_LANG || 'ja');
             const proto = CanvasRenderingContext2D && CanvasRenderingContext2D.prototype;
             if (!proto || proto.__i18nPatched) return;
             function translate(text) {
@@ -167,32 +131,6 @@
             }
             const _fillText = proto.fillText;
             const _strokeText = proto.strokeText;
-            // Group related phrases so they scale together and keep consistent font size
-            const groups = {
-                welcome: [
-                    'Welcome User!',
-                    "Let's get started setting",
-                    'up your new CLM.'
-                ],
-                download: [
-                    'Download the',
-                    'Rapsodo Studios Suite'
-                ],
-                connect: [
-                    'Connect to PC using',
-                    'ethernet Cable'
-                ],
-                multipleBalls: [
-                    'MULTIPLE BALLS',
-                    'DETECTED'
-                ]
-            };
-            function getGroupIdForText(originalText) {
-                for (const key in groups) {
-                    if (groups[key].includes(originalText)) return key;
-                }
-                return null;
-            }
             function buildLines(ctx, text, maxWidth, langHint) {
                 const fontMatch = (ctx.font || '').match(/(\d+(?:\.\d+)?)px/);
                 const lineHeight = (fontMatch ? parseFloat(fontMatch[1]) : 14) * 1.2;
@@ -228,7 +166,7 @@
                 return { lines, lineHeight };
             }
             function drawWrapped(drawFunc, ctx, text, x, y, targetWidth) {
-                const { lines, lineHeight } = buildLines(ctx, text, targetWidth, (window.APP_LANG || 'en'));
+                const { lines, lineHeight } = buildLines(ctx, text, targetWidth, (window.APP_LANG || 'ja'));
                 if (lines.length === 0) return;
                 for (let i = 0; i < lines.length; i++) {
                     drawFunc.call(ctx, lines[i], x, y + i * lineHeight);
@@ -236,11 +174,10 @@
             }
             function fitAndDraw(drawFunc, ctx, text, x, y, maxWidth) {
                 const translated = translate(text);
-                if (translated === '') return; // allow combined translations to suppress a line
+                if (translated === '') return;
                 if (ctx && ctx.__i18nDisableAutoFit) {
                     return drawFunc.call(ctx, translated, x, y);
                 }
-                // Determine target width: prefer provided maxWidth, else canvas width minus margins
                 const canvasWidth = ctx && ctx.canvas ? ctx.canvas.width : undefined;
                 const margin = 16;
                 let targetWidth = maxWidth || (canvasWidth ? Math.max(0, canvasWidth - margin * 2) : undefined);
@@ -257,22 +194,6 @@
                     }
                 }
                 if (!targetWidth) return drawFunc.call(ctx, translated, x, y);
-                // If text belongs to a group, compute a shared scale across the whole group
-                const groupId = getGroupIdForText(text);
-                if (groupId) {
-                    const originalFont = ctx.font;
-                    // Measure the widest translated member using current font
-                    let maxWidthInGroup = 0;
-                    for (const member of groups[groupId]) {
-                        const t = translate(member);
-                        const w = ctx.measureText(t).width;
-                        if (w > maxWidthInGroup) maxWidthInGroup = w;
-                    }
-                    // Draw wrapped to keep consistent size across lines
-                    drawWrapped(drawFunc, ctx, translated, x, y, targetWidth);
-                    return;
-                }
-                // Draw wrapped for single line cases as well
                 drawWrapped(drawFunc, ctx, translated, x, y, targetWidth);
                 return;
             }
@@ -287,4 +208,6 @@
     </script>
     <script src="script.js"></script>
 </body>
-</html> 
+</html>
+
+
